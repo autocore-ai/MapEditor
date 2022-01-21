@@ -1,0 +1,258 @@
+﻿<Window x:Class="MapEditor.WpfShell.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ctls="clr-namespace:MapEditor.Controls;assembly=MapEditor.Controls"
+        xmlns:local="clr-namespace:MapEditor.WpfShell"
+        xmlns:localVM="clr-namespace:MapEditor.WpfShell.ViewModels"
+        xmlns:localViews="clr-namespace:MapEditor.WpfShell.Views"
+        xmlns:localConverters="clr-namespace:MapEditor.WpfShell.Converters"
+        xmlns:localSelectors="clr-namespace:MapEditor.WpfShell.Selectors"
+        mc:Ignorable="d" 
+        Title="MapEditor" Height="450" Width="800">
+    <Window.Resources>
+        <localConverters:ActiveDocumentConverter x:Key="ActiveDocumentConverter" />
+        <localConverters:BoolToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
+        <DataTemplate DataType="{x:Type localVM:MapEditorViewModel}">
+            <DockPanel>
+                <Grid DockPanel.Dock="Top">
+                </Grid>
+
+                <Grid>
+                    <localViews:MapEditorView DataContext="{Binding}" />
+                </Grid>
+            </DockPanel>
+        </DataTemplate>
+    </Window.Resources>
+
+    <ctls:BusyIndicator IsBusy="{Binding Path=IsBusy}">
+        <DockPanel>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="File">
+                    <MenuItem Header="Load PCD" 
+                              Command="{Binding Path=LoadPCDCommand}" />
+                    <MenuItem Header="Load OSM" 
+                              Command="{Binding Path=LoadOSMCommand}" />
+                    <MenuItem Header="Save OSM" 
+                              Command="{Binding Path=SaveOSMCommand}" />
+                    <MenuItem Header="Exit" 
+                              Command="{Binding Path=ExicCommand}" />
+                </MenuItem>
+                <MenuItem Header="Windows">
+                    <!--<MenuItem Header="Layer" />-->
+                    <MenuItem Header="Property" 
+                              IsCheckable="True" 
+                              IsChecked="{Binding Path=PropertyVM.IsVisible, Mode=TwoWay}" />
+                    <MenuItem Header="Message" 
+                              IsCheckable="True" 
+                              IsChecked="{Binding Path=MessageVM.IsVisible, Mode=TwoWay}" />
+                </MenuItem>
+                <MenuItem Header="Help">
+                    <MenuItem Header="About" />
+                </MenuItem>
+            </Menu>
+
+            <ToolBar DockPanel.Dock="Top">
+                <ToolBarTray>
+                    <ToolBar>
+                        <Button Margin="4,4,2,4" 
+                            MinWidth="36" 
+                            ToolTip="go back" 
+                            Command="{Binding Path=EditBackCommand}">
+                            <TextBlock FontSize="24" 
+                                   Margin="2" 
+                                   Style="{StaticResource IconStyle}" 
+                                   Text="{StaticResource fa-arrow-left}" />
+                        </Button>
+                        <Button Margin="2,4" 
+                            MinWidth="36" 
+                            ToolTip="Undo" 
+                            Command="{Binding Path=EditRedoCommand}">
+                            <TextBlock FontSize="24" 
+                                   Margin="2" 
+                                   Style="{StaticResource IconStyle}" 
+                                   Text="{StaticResource fa-undo}" />
+                        </Button>
+                        <Button Margin="2,4,4,4" 
+                            MinWidth="36" 
+                            ToolTip="delete" 
+                            Command="{Binding Path=DeleteElementCommand}">
+                            <!-- notice size -->
+                            <TextBlock FontSize="28" 
+                                   Style="{StaticResource IconStyle}" 
+                                   Text="{StaticResource fa-times}" />
+                        </Button>
+                    </ToolBar>
+                </ToolBarTray>
+                <ToolBarTray>
+                    <!-- Height:32 -->
+                    <ToolBar>
+                        <!-- Map -->
+                        <Button Margin="4,4,2,4" 
+                            Command="{Binding Path=AddOsmMapCommand}" 
+                            ToolTip="add a map">
+                            <TextBlock FontSize="20" 
+                                   Margin="2" 
+                                   Style="{StaticResource IconStyle}" 
+                                   Text="{StaticResource fa-map}" />
+                        </Button>
+                        <!--<ListBox SelectionMode="Single" 
+                             Background="Transparent" BorderBrush="Transparent">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                </StackPanel>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBoxItem IsSelected="{Binding Path=IsLaneletAdding, Mode=TwoWay}" 
+                                     ToolTip="add a lanelet">
+                            <ListBoxItem.Content>
+                                <TextBlock FontSize="20" 
+                                           Margin="2" 
+                                           Style="{StaticResource IconStyle}" 
+                                           Text="{StaticResource fa-map-marker}" />
+                            </ListBoxItem.Content>
+                        </ListBoxItem>
+                        <ListBoxItem IsSelected="{Binding Path=IsWhiteLineAdding, Mode=TwoWay}" 
+                                     ToolTip="add a white line">
+                            <ListBoxItem.Content>
+                                <TextBlock FontSize="20" 
+                                           Margin="2" 
+                                           Style="{StaticResource IconStyle}" 
+                                           Text="{StaticResource fa-map-o}" />
+                            </ListBoxItem.Content>
+                        </ListBoxItem>
+                        <ListBoxItem IsSelected="{Binding Path=IsStopLineAdding, Mode=TwoWay}" 
+                                     ToolTip="add a stop line">
+                            <ListBoxItem.Content>
+                                <TextBlock FontSize="20" 
+                                           Margin="2" 
+                                           Style="{StaticResource IconStyle}" 
+                                           Text="{StaticResource fa-map-pin}" />
+                            </ListBoxItem.Content>
+                        </ListBoxItem>
+                    </ListBox>-->
+                        <!-- Lanelet -->
+                        <ToggleButton Margin="2,4" 
+                                  MinWidth="36" 
+                                  HorizontalContentAlignment="Center" 
+                                  IsChecked="{Binding Path=IsLaneletAdding, Mode=TwoWay}" 
+                                  ToolTip="add a lanelet">
+                            <TextBlock FontSize="20" 
+                                   Margin="2" 
+                                   Style="{StaticResource IconStyle}" 
+                                   Text="{StaticResource fa-map-marker}" />
+                        </ToggleButton>
+                        <!-- WhiteLine -->
+                        <ToggleButton Margin="2,4" 
+                                  MinWidth="36" 
+                                  HorizontalContentAlignment="Center" 
+                                  IsChecked="{Binding Path=IsWhiteLineAdding, Mode=TwoWay}" 
+                                  ToolTip="add a white line">
+                            <TextBlock FontSize="20" 
+                                   Margin="2" 
+                                   Style="{StaticResource IconStyle}" 
+                                   Text="{StaticResource fa-map-o}" />
+                        </ToggleButton>
+                        <!-- StopLine -->
+                        <ToggleButton Margin="2,4,4,4" 
+                                  MinWidth="36" 
+                                  HorizontalContentAlignment="Center" 
+                                  IsChecked="{Binding Path=IsStopLineAdding, Mode=TwoWay}" 
+                                  ToolTip="add a stop line">
+                            <TextBlock FontSize="20" 
+                                   Margin="2" 
+                                   Style="{StaticResource IconStyle}" 
+                                   Text="{StaticResource fa-map-pin}" />
+                        </ToggleButton>
+                    </ToolBar>
+                </ToolBarTray>
+            </ToolBar>
+
+            <Grid>
+                <DockingManager x:Name="dockingManager" 
+                            DocumentsSource="{Binding Path=ListEditor}" 
+                            AnchorablesSource="{Binding Path=ListTool}" 
+                            ActiveContent="{Binding Path=CurrentEditor, Mode=TwoWay, Converter={StaticResource ActiveDocumentConverter}}">
+                    <DockingManager.LayoutItemTemplateSelector>
+                        <localSelectors:PanesTemplateSelector>
+                            <!-- MapEditor DataTemplate -->
+                            <localSelectors:PanesTemplateSelector.MapEditorTemplate>
+                                <DataTemplate>
+                                    <localViews:MapEditorView Content="{Binding}" />
+                                </DataTemplate>
+                            </localSelectors:PanesTemplateSelector.MapEditorTemplate>
+                            <!-- Message DataTemplate -->
+                            <localSelectors:PanesTemplateSelector.MessagePaneTemplate>
+                                <DataTemplate>
+                                    <localViews:MessageView Content="{Binding}" />
+                                </DataTemplate>
+                            </localSelectors:PanesTemplateSelector.MessagePaneTemplate>
+                            <!-- Property DataTemplate -->
+                            <localSelectors:PanesTemplateSelector.PropertyPaneTemplate>
+                                <DataTemplate>
+                                    <localViews:PropertyView Content="{Binding}" />
+                                </DataTemplate>
+                            </localSelectors:PanesTemplateSelector.PropertyPaneTemplate>
+                        </localSelectors:PanesTemplateSelector>
+                    </DockingManager.LayoutItemTemplateSelector>
+                    <DockingManager.LayoutItemContainerStyleSelector>
+                        <localSelectors:PanesStyleSelector>
+                            <!-- MapEditor Style -->
+                            <localSelectors:PanesStyleSelector.MapEditorStyle>
+                                <Style TargetType="{x:Type LayoutItem}">
+                                    <Setter Property="Title" 
+                                        Value="{Binding Path=Model.Title}" />
+                                    <Setter Property="CanClose" 
+                                        Value="False" />
+                                    <Setter Property="ContentId" 
+                                        Value="{Binding Path=Model.ContentId}" />
+                                    <Setter Property="IsActive" 
+                                        Value="{Binding Path=Model.IsActive, Mode=TwoWay}" />
+                                </Style>
+                            </localSelectors:PanesStyleSelector.MapEditorStyle>
+                            <localSelectors:PanesStyleSelector.ToolPaneStyle>
+                                <Style TargetType="{x:Type LayoutAnchorableItem}">
+                                    <Setter Property="CanClose" 
+                                        Value="True" />
+                                    <Setter Property="ContentId" 
+                                        Value="{Binding Path=Model.ContentId}" />
+                                    <Setter Property="Title" 
+                                        Value="{Binding Path=Model.Title}" />
+                                    <Setter Property="IsActive" 
+                                        Value="{Binding Path=Model.IsActive, Mode=TwoWay}" />
+                                    <Setter Property="IsSelected" 
+                                        Value="{Binding Path=Model.IsSelected, Mode=TwoWay}" />
+                                    <Setter Property="Visibility" 
+                                        Value="{Binding Path=Model.IsVisible, Mode=TwoWay, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=False}" />
+                                </Style>
+                            </localSelectors:PanesStyleSelector.ToolPaneStyle>
+                        </localSelectors:PanesStyleSelector>
+                    </DockingManager.LayoutItemContainerStyleSelector>
+
+                    <DockingManager.LayoutUpdateStrategy>
+                        <local:AvalonDockLayoutInitializer />
+                    </DockingManager.LayoutUpdateStrategy>
+                    <LayoutRoot>
+                        <LayoutPanel Orientation="Vertical">
+                            <LayoutDocumentPane />
+                            <LayoutAnchorablePane Name="ToolsPane" DockHeight="150" />
+                        </LayoutPanel>
+                        <LayoutRoot.BottomSide>
+                            <LayoutAnchorSide>
+                                <LayoutAnchorGroup />
+                            </LayoutAnchorSide>
+                        </LayoutRoot.BottomSide>
+                        <LayoutRoot.RightSide>
+                            <LayoutAnchorSide>
+                                <LayoutAnchorGroup />
+                            </LayoutAnchorSide>
+                        </LayoutRoot.RightSide>
+                    </LayoutRoot>
+                </DockingManager>
+            </Grid>
+        </DockPanel>
+    </ctls:BusyIndicator>
+</Window>

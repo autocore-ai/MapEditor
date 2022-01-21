@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package MapEditor;
+
+service MapEditorGrpcService {
+	rpc SubscribeFileOperation(Empty) returns (stream OperateFileAction) {}
+	rpc SubscribeMapEdition(Empty) returns (stream EditMapAction) {}
+	rpc SubscribeElementAddition(Empty) returns (stream AddElementAction) {}
+	rpc SetAddingElementType(AddElementAction) returns (Empty) {}
+	rpc SendLogInfo(LogInfo) returns (Empty) {}
+}
+
+message OperateFileAction {
+	enum OperateFileType {
+		LoadPCD = 0;
+		LoadOSM = 1;
+		SaveOSM = 2;
+	}
+	OperateFileType operateType = 1;
+	string filePath = 2;
+}
+
+message EditMapAction {
+	enum EditMapType {
+		Exit = 0;
+		Back = 1;
+		Redo = 2;
+	}
+	EditMapType editType = 1;
+}
+
+message AddElementAction {
+	enum AddElementType {
+		Lanelet = 0;
+		WhiteLine = 1;
+		StopLine = 2;
+	}
+	AddElementType elementType = 1;
+	bool isAdd = 2;
+}
+
+message LogInfo {
+	enum LogLevel {
+		Trace = 0;
+		Debug = 1;
+		Info = 2;
+		Warning = 3;
+		Error = 4;
+	}
+	LogLevel logLevel = 1;
+	string logMessage = 2;
+}
+
+message Empty{
+}

@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net472</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>map-edir.ico</ApplicationIcon>
+    <SignAssembly>False</SignAssembly>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="map-edir.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dirkster.AvalonDock" Version="4.60.1" />
+    <PackageReference Include="MvvmLight" Version="5.4.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FontAwesome.Wpf\FontAwesome.Wpf.csproj" />
+    <ProjectReference Include="..\MapEditor.Controls\MapEditor.Controls.csproj" />
+    <ProjectReference Include="..\MapEditor.Grpc.Server\MapEditor.Grpc.Server.csproj" />
+    <ProjectReference Include="..\MapEditor.Models\MapEditor.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Configuration" />
+  </ItemGroup>
+
+</Project>

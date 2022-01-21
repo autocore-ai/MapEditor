@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="FontAwesome\fontawesome-webfont.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="FontAwesome\fontawesome-webfont.ttf" />
+  </ItemGroup>
+
+</Project>
