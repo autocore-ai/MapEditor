@@ -9,8 +9,15 @@ DISK:1GB
 ## how to use
 ### 1.Download MapEditor
 ### 2.launch MapEditor
+![home page](Pic/shouye.png)
+
 ### 3.Import PCD file
 Click File-LoadPCD to import your PCD file  
+
+![File](Pic/File.jpg)
+
+![PointCloud](Pic/PointCloud.png)
+
 ### 4.Import VectorMap
 Click File-LoadOSM to Import your osm file
 ### 5.Camera Operate
@@ -23,10 +30,16 @@ Switch Projection-Switch Camera Mode
 Align X - Align the camera along the X axis at the target  
 Align Y - Align the camera along the Y axis at the target  
 Align Z - Align the camera along the Z axis at the target
+
+![CameraMove](Pic/图片1.gif)
+![CameraMove](Pic/图片2.gif)
+
 ### Add white line
 1. Click add a white line or ctrl+1 to enter AddLineMode
 2. Click in map to set line position
 3. Enter BezierMode to edit Line with Bezier curve
+   
+![CameraMove](Pic/图片3.gif)
 ### Add Road
 1. Click Add a lanelet OR ctrl+0
 2. Click in map to set lanelet positions
@@ -34,9 +47,14 @@ Align Z - Align the camera along the Z axis at the target
 4. Drag Bezier handle to Set the direction of the lanelet
 5. Ctrl+W to extend the Selected Lanelet
 6. Ctrl+D to Copy a Lanelet at right of Selected Lanelet
+
+
+![lanelet](Pic/图片4.gif)
 ### Add TrafficLight
 1. Click Add a TrafficLight or ctrl+3
 2. Click to Set position of Trafficlight and then drag the leftPoint and rightPoint to Align trafficlights to right position
+
+![Trafficlight](Pic/图片5.gif)
 ### Add StopLine
 1. select two Point
 2. Click Add a StopLine or ctrl+2
